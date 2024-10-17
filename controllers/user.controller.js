@@ -20,9 +20,6 @@ const signup = async (req, res) => {
 
     await newUser.save();
     res.status(200).json({
-      userId: newUser._id,
-      userName: newUser.name,
-      email: newUser.email,
       message: "User registered successfully"
     });    
   } catch (error) {
