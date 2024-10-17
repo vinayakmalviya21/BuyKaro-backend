@@ -61,7 +61,45 @@ const login = async (req, res) => {
   }
 };
 
+// Edit Profile Controller
+const editProfile = async (req, res) => {
+  const userId = req.body.userId;
+  const { phone, address, city, postalCode, country } = req.body;
+
+  try {
+      const user = await User.findById(userId);
+
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      const updatedShippingAddress = {
+          address: address || user.shippingAddress.address,
+          city: city || user.shippingAddress.city,
+          postalCode: postalCode || user.shippingAddress.postalCode,
+          country: country || user.shippingAddress.country,
+      };
+
+      const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          {
+              shippingAddress: updatedShippingAddress,
+              phone: phone || user.phone, 
+          },
+          { new: true } 
+      );
+
+      res.status(200).json({
+          message: "Profile updated successfully",
+          user: updatedUser,
+      });
+  } catch (error) {
+      res.status(500).json({ message: "Server error", error });
+  }
+};
+
 module.exports = {
   signup,
   login,
+  editProfile,
 };

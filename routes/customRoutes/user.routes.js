@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { signup, login } = require('../../controllers/user.controller');
+const { signup, login, editProfile } = require('../../controllers/user.controller');
 
-// Signup Route
+// Existing routes
 router.post('/signup', signup);
-
-// Login Route
 router.post('/login', login);
+
+// New Edit Profile Route
+router.put('/edit-profile', editProfile); 
 
 module.exports = router;
