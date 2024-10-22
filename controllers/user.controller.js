@@ -53,7 +53,7 @@ const login = async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
       },
     });
   } catch (error) {
@@ -98,8 +98,30 @@ const editProfile = async (req, res) => {
   }
 };
 
+// Get User Controller
+const getUser = async (req, res) => {
+  const userId = req.body.userId;
+
+  try {
+      const user = await User.findById(userId,{password:0});
+
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      res.status(200).json({
+          message: "Profile updated successfully",
+          user: user,
+      });
+  } catch (error) {
+      res.status(500).json({ message: "Server error", error });
+  }
+};
+
+
 module.exports = {
   signup,
   login,
   editProfile,
+  getUser
 };
