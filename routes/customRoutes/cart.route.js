@@ -9,6 +9,6 @@ router.post('/add', addToCart);
 router.get('/', getCart);
 
 // Route to remove item from cart
-router.post('/remove', removeFromCart);
+router.delete('/remove/:productId', removeFromCart);
 
 module.exports = router;

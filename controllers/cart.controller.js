@@ -93,7 +93,7 @@ const removeFromCart = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const { productId } = req.body;
+    const { productId } = req.params; // Get productId from request parameters
 
     const cart = await Cart.findOne({ user: user._id });
 
@@ -120,6 +120,7 @@ const removeFromCart = async (req, res) => {
     res.status(401).json({ message: error.message });
   }
 };
+
 
 module.exports = {
   addToCart,
